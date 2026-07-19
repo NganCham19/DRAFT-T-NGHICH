@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -71,6 +70,13 @@
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.22);
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+            /* Hide scrollbar for cleaner look while keeping scrolling active */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        
+        .glass-sidebar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
         }
 
         /* Enhanced text-shadow for desktop icon labels to ensure legibility over the misty background */
@@ -158,6 +164,8 @@
                 right: 0 !important;
                 width: 100% !important;
                 max-width: 100% !important;
+                max-height: none !important;
+                overflow-y: visible !important;
                 display: grid !important;
                 grid-template-cols: repeat(5, 1fr) !important;
                 justify-items: center !important;
@@ -318,8 +326,8 @@
             </div>
         </header>
 
-        <!-- ==================== NEW ENLARGED GLASSMORPHISM VERTICAL SIDEBAR ==================== -->
-        <section class="desktop-shortcut-container absolute top-28 left-6 w-[136px] py-6 glass-sidebar rounded-[32px] flex flex-col items-center gap-3.5 z-30 select-none">
+        <!-- ==================== NEW ENLARGED GLASSMORPHISM VERTICAL SIDEBAR (Scrollable when short) ==================== -->
+        <section class="desktop-shortcut-container absolute top-28 left-6 w-[136px] max-h-[calc(100vh-160px)] overflow-y-auto py-6 glass-sidebar rounded-[32px] flex flex-col items-center gap-3.5 z-30 select-none">
             
             <!-- Icon 1: Về Bản Thân -->
             <button onclick="openWindow('win-bio')" class="desktop-icon flex flex-col items-center justify-center p-2 rounded-2xl w-full text-white text-center focus:outline-none hover:bg-white/5 transition-all duration-300">
@@ -544,7 +552,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
                                 <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
                                     <p class="font-bold text-amber-300">Khai thác dữ liệu học thuật</p>
-                                    <p class="text-slate-400 font-light mt-1 text-justify font-sans">Khai thác và đối chiếu nghiêm ngặt mười tài liệu học thuật chính thống về động lực học tiếng Trung Quốc của sinh viên đại học nhằm xây dựng cơ sở lý luận vững chắc cho nghiên cứu của mình.</p>
+                                    <p class="text-slate-400 font-light mt-1 text-justify font-sans">Khai thác và đối chiếu nghiêm ngập mười tài liệu học thuật chính thống về động lực học tiếng Trung Quốc của sinh viên đại học nhằm xây dựng cơ sở lý luận vững chắc cho nghiên cứu của mình.</p>
                                 </div>
                                 <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
                                     <p class="font-bold text-indigo-300">Bài học kinh nghiệm rút ra</p>
@@ -710,7 +718,7 @@
                                     <p class="font-bold text-amber-300">Mục tiêu bài thực hành</p>
                                     <p class="text-slate-400 font-light mt-1 text-justify font-sans">Ứng dụng thuần thục các nền tảng cộng tác trực tuyến để quản lý tiến độ, chia sẻ học liệu và soạn thảo báo cáo chung cho đề tài nhóm "Ứng dụng của AI trong lĩnh vực Ngoại ngữ".</p>
                                 </div>
-                                <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                                <div class="p-4 bg-white/5 border border-white/5 rounded-xl font-sans">
                                     <p class="font-bold text-indigo-300">Bài học kinh nghiệm rút ra</p>
                                     <p class="text-slate-400 font-light mt-1 text-justify font-sans">Việc chủ động thiết lập quy tắc quản trị từ đầu và phân chia rõ ràng trách nhiệm công việc giúp loại bỏ hoàn toàn hiện tượng chồng chéo thông tin hay thất lạc tư liệu.</p>
                                 </div>
@@ -880,7 +888,7 @@
                                 </div>
                                 <div class="p-4 bg-white/5 border border-white/5 rounded-xl font-sans">
                                     <p class="font-bold text-indigo-300">Bài học kinh nghiệm rút ra</p>
-                                    <p class="text-slate-400 font-light mt-1 text-justify font-sans font-sans">AI chỉ được phép đóng vai trò là Trợ lý hỗ trợ quy trình, tuyệt đối không thể thay thế cho chủ thể tư duy độc lập của chính bản thân người học.</p>
+                                    <p class="text-slate-400 font-light mt-1 text-justify font-sans">AI chỉ được phép đóng vai trò là Trợ lý hỗ trợ quy trình, tuyệt đối không thể thay thế cho chủ thể tư duy độc lập của chính bản thân người học.</p>
                                 </div>
                             </div>
 
@@ -1386,6 +1394,48 @@
             }
         });
 
+        // 18. Magnetic Icon Interaction (Lực hút)
+        function initMagneticInteraction() {
+            const icons = document.querySelectorAll('.desktop-icon');
+            icons.forEach(btn => {
+                // Chỉ áp dụng hiệu ứng lực hút trên màn hình lớn (không áp dụng trên giao diện di động dạng lưới ngang)
+                btn.addEventListener('mousemove', (e) => {
+                    if (window.innerWidth < 1023) return; // Bỏ qua trên di động
+                    const rect = btn.getBoundingClientRect();
+                    
+                    // Lấy vị trí trung tâm của biểu tượng
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    
+                    // Tính khoảng cách từ chuột tới tâm biểu tượng
+                    const deltaX = e.clientX - centerX;
+                    const deltaY = e.clientY - centerY;
+                    
+                    // Hệ số lực hút và khoảng cách dịch chuyển tối đa
+                    const magnetStrength = 0.35; 
+                    const maxTranslate = 14; 
+                    
+                    let translateTargetX = deltaX * magnetStrength;
+                    let translateTargetY = deltaY * magnetStrength;
+                    
+                    // Giới hạn khoảng di chuyển để không bị trượt quá xa
+                    translateTargetX = Math.max(-maxTranslate, Math.min(maxTranslate, translateTargetX));
+                    translateTargetY = Math.max(-maxTranslate, Math.min(maxTranslate, translateTargetY));
+                    
+                    // Cập nhật thuộc tính CSS transform và transition mượt mà
+                    btn.style.transform = `translate(${translateTargetX}px, ${translateTargetY}px)`;
+                    btn.style.transition = 'transform 0.1s cubic-bezier(0.25, 1, 0.5, 1)';
+                });
+                
+                btn.addEventListener('mouseleave', () => {
+                    // Trượt mượt mà về vị trí cân bằng cũ
+                    btn.style.transform = 'translate(0px, 0px)';
+                    btn.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                });
+            });
+        }
+        initMagneticInteraction();
+
         function lockScreen() {
             document.getElementById('lock-screen').classList.remove('unlocked');
             toggleStartMenu(true);
@@ -1797,13 +1847,13 @@
                 this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
 
                 if (isExplosion) {
-                    // Xuất hiện ngẫu nhiên trong bán kính từ 8px đến 40px xung quanh con trỏ [1]
+                    // Xuất hiện ngẫu nhiên trong bán kính từ 8px đến 40px xung quanh con trỏ
                     const offsetAngle = Math.random() * Math.PI * 2;
                     const offsetRadius = Math.random() * 32 + 8;
                     this.x = x + Math.cos(offsetAngle) * offsetRadius;
                     this.y = y + Math.sin(offsetAngle) * offsetRadius;
 
-                    // Di chuyển tỏa ra ngoài hướng tâm từ tọa độ con trỏ chuột [1]
+                    // Di chuyển tỏa ra ngoài hướng tâm từ tọa độ con trỏ chuột
                     const speed = Math.random() * 1.6 + 1.2; // Tốc độ bay nhanh hơn
                     const angle = Math.atan2(this.y - y, this.x - x);
                     this.vx = Math.cos(angle) * speed;
@@ -1858,7 +1908,7 @@
                 const progress = Math.min(1, this.distanceTraveled / this.maxDistance);
                 const fadeFactor = 1 - progress;
 
-                // Các hạt to ra khoảng 0-30% (từ 100% lên tối đa 130%) trong vòng đời của nó [1]
+                // Các hạt to ra khoảng 0-30% (từ 100% lên tối đa 130%) trong vòng đời của nó
                 const growthFactor = 1 + (progress * 0.3);
 
                 this.opacity = this.initialOpacity * fadeFactor;
@@ -1919,11 +1969,11 @@
             }
         }
 
-        // Kích hoạt bùng nổ hạt xung quanh điểm click chuột [1]
+        // Kích hoạt bùng nổ hạt xung quanh điểm click chuột
         function spawnExplosion(x, y) {
-            const count = Math.floor(Math.random() * 10) + 15; // 15 đến 25 hạt [1]
+            const count = Math.floor(Math.random() * 10) + 15; // 15 đến 25 hạt
             for (let i = 0; i < count; i++) {
-                particles.push(new WaveParticle(x, y, true)); // Thêm cờ nổ [1]
+                particles.push(new WaveParticle(x, y, true)); // Thêm cờ nổ
             }
         }
 
