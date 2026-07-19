@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -372,7 +371,7 @@
                     <img src="Hình 2.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 2">
                     <img src="Hình 3.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 3">
                     <img src="Hình 4.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 4">
-                    <img src="Hình 5.1.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 5">
+                    <img src="Hình 5.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 5">
                     <img src="Hình 6.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 6">
                     <img src="Hình 7.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 7">
                     <img src="Hình 8.jpg" class="slideshow-img absolute inset-0 w-full h-full object-cover transition-opacity opacity-0" alt="Slide 8">
@@ -553,7 +552,7 @@
                             </div>
 
                             <div class="space-y-3">
-                                <p class="text-xs font-semibold text-slate-200">Mười tài liệu học thuật được mình chọn lọc và thẩm định rất kỹ lưỡng:</p>
+                                <p class="text-xs font-semibold text-slate-200">Mười tài liệu học thuật được mình chọn lọc và thẩm định rất kỹ lưu lượng:</p>
                                 <div class="space-y-2 max-h-48 overflow-y-auto pr-2 text-[11px] font-light text-slate-300">
                                     <div class="p-3 bg-black/25 border border-white/5 rounded-lg">
                                         <p class="font-semibold text-slate-200">1. Dörnyei, Z. (2001)</p>
@@ -1047,8 +1046,8 @@
                         </div>
 
                         <!-- Ảnh 5 -->
-                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 5.1.jpg')">
-                            <img src="Hình 5.1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 5.1">
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 5.jpg')">
+                            <img src="Hình 5.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 5">
                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <span class="text-xs text-white tracking-wider font-light flex items-center gap-1">
                                     <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
@@ -1416,9 +1415,9 @@
         const defaultPositions = {
             'win-bio': { left: '220px', top: '100px' },
             'win-projects': { left: '310px', top: '70px' },
-            'win-summary': { left: '460px', top: '220px' },
+            'win-summary': { left: '460px', top: '180px' },
             'win-gallery': { left: '320px', top: '120px' },
-            'win-recycle-bin': { left: '280px', top: '280px' },
+            'win-recycle-bin': { left: '280px', top: '220px' },
             'win-text-viewer': { left: '360px', top: '260px' }
         };
 
@@ -1769,7 +1768,7 @@
         // Automate rotation every 4500ms (4.5 seconds)
         setInterval(nextWidgetSlide, 4500);
 
-        // ==================== INTERACTIVE MOUSE PARTICLES SYSTEM (With 0-30% Growth Modifier) ====================
+        // ==================== INTERACTIVE MOUSE PARTICLES SYSTEM (With Explosion & Outward Radiation) ====================
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -1792,40 +1791,60 @@
         resizeCanvas();
 
         class WaveParticle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.maxSize = Math.random() * 5 + 3.5; // Kích thước ngẫu nhiên từ rất nhỏ đến nhỏ vừa (3.5px -> 8.5px)
+            constructor(x, y, isExplosion = false) {
+                this.isExplosion = isExplosion;
+                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+
+                if (isExplosion) {
+                    // Xuất hiện ngẫu nhiên trong bán kính từ 8px đến 40px xung quanh con trỏ [1]
+                    const offsetAngle = Math.random() * Math.PI * 2;
+                    const offsetRadius = Math.random() * 32 + 8;
+                    this.x = x + Math.cos(offsetAngle) * offsetRadius;
+                    this.y = y + Math.sin(offsetAngle) * offsetRadius;
+
+                    // Di chuyển tỏa ra ngoài hướng tâm từ tọa độ con trỏ chuột [1]
+                    const speed = Math.random() * 1.6 + 1.2; // Tốc độ bay nhanh hơn
+                    const angle = Math.atan2(this.y - y, this.x - x);
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+
+                    this.maxSize = Math.random() * 14 + 4.5; // Kích thước hạt nổ lớn hơn một chút
+                    this.maxDistance = Math.random() * 40 + 40; // Bay xa khoảng 40px -> 80px
+                    this.waveSpeed = Math.random() * 0.02 + 0.01; // Quỹ đạo thẳng hơn chút
+                } else {
+                    this.x = x;
+                    this.y = y;
+                    this.maxSize = Math.random() * 14 + 3.5;
+                    this.maxDistance = Math.random() * 20 + 30;
+                    this.waveSpeed = Math.random() * 0.04 + 0.02;
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 0.5 + 0.3;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                }
+
                 this.size = this.maxSize;
                 this.initialOpacity = Math.random() * 0.5 + 0.25; // Opacity từ 25% đến 75%
                 this.opacity = this.initialOpacity;
                 
-                // Chọn ngẫu nhiên giữa ngôi sao, hoa và hạt sáng
                 const types = ['star', 'flower', 'glow'];
                 this.type = types[Math.floor(Math.random() * types.length)];
-                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
-
-                // Tỏa ra từ điểm trỏ chuột theo hình vòng cung nhẹ hoặc tỏa tròn
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 0.5 + 0.3; // Tốc độ di chuyển chậm rãi
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
 
                 this.waveOffset = Math.random() * Math.PI * 2;
-                this.waveSpeed = Math.random() * 0.04 + 0.02; // Tần số lượn sóng lơ lửng
-
                 this.rotation = Math.random() * Math.PI * 2;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.02; // Quay chậm rãi
+                this.rotationSpeed = (Math.random() - 0.5) * (isExplosion ? 0.06 : 0.02); // Quay nhanh hơn khi bùng nổ
 
                 this.distanceTraveled = 0;
-                this.maxDistance = Math.random() * 20 + 30; // Khoảng cách trôi từ 30px đến 50px
             }
 
             update() {
-                // Quỹ đạo uốn lượn (floating)
                 this.rotation += this.rotationSpeed;
-                const waveX = Math.sin(this.distanceTraveled * this.waveSpeed + this.waveOffset) * 0.35;
-                const waveY = Math.cos(this.distanceTraveled * this.waveSpeed + this.waveOffset) * 0.35;
+                
+                // Lực sóng lượn (float) nhẹ nhàng
+                const waveScale = this.isExplosion ? 0.15 : 0.35;
+                const waveX = Math.sin(this.distanceTraveled * this.waveSpeed + this.waveOffset) * waveScale;
+                const waveY = Math.cos(this.distanceTraveled * this.waveSpeed + this.waveOffset) * waveScale;
 
                 const stepX = this.vx + waveX;
                 const stepY = this.vy + waveY;
@@ -1835,16 +1854,15 @@
 
                 this.distanceTraveled += Math.hypot(stepX, stepY);
 
-                // Tính toán tiến trình di chuyển
                 const progress = Math.min(1, this.distanceTraveled / this.maxDistance);
                 const fadeFactor = 1 - progress;
 
-                // Các hạt to ra khoảng 0-30% (từ 100% kích thước ban đầu tăng dần lên 130%) [1]
+                // Các hạt to ra khoảng 0-30% (từ 100% lên tối đa 130%) trong vòng đời của nó [1]
                 const growthFactor = 1 + (progress * 0.3);
 
                 this.opacity = this.initialOpacity * fadeFactor;
 
-                // Để tránh hạt biến mất đột ngột, ta thu nhỏ nhanh ở 15% chặng đường cuối
+                // Hồi quy kích thước nhanh trong 15% chặng đường cuối để tan biến mịn
                 const shrinkFactor = progress > 0.85 ? (1 - progress) / 0.15 : 1;
                 this.size = this.maxSize * growthFactor * shrinkFactor;
             }
@@ -1857,7 +1875,7 @@
                 ctx.fillStyle = this.color;
 
                 if (this.type === 'star') {
-                    // Vẽ ngôi sao 4 cánh thanh lịch
+                    // Ngôi sao 4 cánh
                     ctx.beginPath();
                     for (let i = 0; i < 4; i++) {
                         ctx.rotate(Math.PI / 2);
@@ -1867,7 +1885,7 @@
                     ctx.closePath();
                     ctx.fill();
                 } else if (this.type === 'flower') {
-                    // Vẽ bông hoa 5 cánh nhỏ
+                    // Bông hoa 5 cánh nhỏ
                     const petals = 5;
                     const r = this.size * 0.45;
                     ctx.beginPath();
@@ -1879,7 +1897,7 @@
                         ctx.arc(px, py, r * 0.75, 0, Math.PI * 2);
                     }
                     ctx.fill();
-                    // Nhụy hoa trung tâm
+                    // Nhụy hoa
                     ctx.beginPath();
                     ctx.arc(0, 0, r * 0.4, 0, Math.PI * 2);
                     ctx.fillStyle = '#ffffff';
@@ -1900,12 +1918,30 @@
             }
         }
 
-        // Tạo hạt khi di chuyển chuột có kiểm soát tần suất để không bị ồ ạt
+        // Kích hoạt bùng nổ hạt xung quanh điểm click chuột [1]
+        function spawnExplosion(x, y) {
+            const count = Math.floor(Math.random() * 10) + 15; // 15 đến 25 hạt [1]
+            for (let i = 0; i < count; i++) {
+                particles.push(new WaveParticle(x, y, true)); // Thêm cờ nổ [1]
+            }
+        }
+
+        window.addEventListener('mousedown', (e) => {
+            spawnExplosion(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) {
+                spawnExplosion(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+
+        // Tạo hạt lơ lửng khi rê chuột
         function handlePointerMove(clientX, clientY) {
             const now = performance.now();
-            if (now - lastSpawnTime > 15) { // Tạo khoảng đệm ~15ms để hạt tỏa ra tự nhiên
+            if (now - lastSpawnTime > 15) {
                 for (let i = 0; i < 2; i++) {
-                    particles.push(new WaveParticle(clientX, clientY));
+                    particles.push(new WaveParticle(clientX, clientY, false));
                 }
                 lastSpawnTime = now;
             }
@@ -1927,7 +1963,6 @@
                 const p = particles[i];
                 p.update();
                 p.draw();
-                // Loại bỏ hạt khi hết quãng đường tối đa
                 if (p.distanceTraveled >= p.maxDistance) {
                     particles.splice(i, 1);
                 }
