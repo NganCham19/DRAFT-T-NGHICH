@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -263,7 +261,7 @@
     <!-- ==================== MAIN DESKTOP ENVIRONMENT ==================== -->
     <main id="desktop" class="relative w-full h-full flex flex-col justify-between p-4 z-20">
         
-        <!-- HEADER (Scaled 50%) -->
+        <!-- HEADER -->
         <header class="w-full flex justify-between items-center px-6 py-3 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white z-30">
             <div class="flex items-center gap-3">
                 <span class="w-[15px] h-[15px] rounded-full bg-emerald-400 animate-pulse"></span>
@@ -278,7 +276,7 @@
             </div>
         </header>
 
-        <!-- Desktop Grid Shortcuts (Scaled 50%) -->
+        <!-- Desktop Grid Shortcuts -->
         <section class="desktop-shortcut-container absolute top-28 left-6 flex flex-col gap-6 z-30">
             <button onclick="openWindow('win-bio')" class="desktop-icon flex flex-col items-center justify-center p-3 rounded-xl w-[144px] h-[144px] text-white hover:text-amber-200 text-center focus:outline-none">
                 <div class="w-[72px] h-[72px] bg-indigo-500/35 border border-indigo-300/30 rounded-2xl flex items-center justify-center shadow-lg mb-3">
@@ -299,6 +297,13 @@
                     <i data-lucide="award" class="w-[36px] h-[36px] text-rose-100"></i>
                 </div>
                 <span class="text-[15px] font-medium tracking-wide drop-shadow-md">Tổng Kết</span>
+            </button>
+
+            <button onclick="openWindow('win-gallery')" class="desktop-icon flex flex-col items-center justify-center p-3 rounded-xl w-[144px] h-[144px] text-white hover:text-amber-200 text-center focus:outline-none">
+                <div class="w-[72px] h-[72px] bg-sky-500/35 border border-sky-300/30 rounded-2xl flex items-center justify-center shadow-lg mb-3">
+                    <i data-lucide="image" class="w-[36px] h-[36px] text-sky-100"></i>
+                </div>
+                <span class="text-[15px] font-medium tracking-wide drop-shadow-md">Thư Viện Ảnh</span>
             </button>
 
             <button onclick="openWindow('win-recycle-bin')" class="desktop-icon flex flex-col items-center justify-center p-3 rounded-xl w-[144px] h-[144px] text-white hover:text-amber-200 text-center focus:outline-none">
@@ -479,7 +484,6 @@
                             <div class="space-y-3">
                                 <p class="text-xs font-semibold text-slate-200">Mười tài liệu học thuật được mình chọn lọc và thẩm định rất kỹ lưỡng:</p>
                                 <div class="space-y-2 max-h-48 overflow-y-auto pr-2 text-[11px] font-light text-slate-300">
-                                    <!-- List of books and articles -->
                                     <div class="p-3 bg-black/25 border border-white/5 rounded-lg">
                                         <p class="font-semibold text-slate-200">1. Dörnyei, Z. (2001)</p>
                                         <p class="text-slate-400 font-sans">Motivational Strategies in the Language Classroom. Clevedon: Multilingual Matters.</p>
@@ -650,7 +654,7 @@
                                     </div>
                                     <div>
                                         <p class="font-semibold text-emerald-300">2. Google Docs trong soạn thảo và biên tập đồng thời khoa học</p>
-                                        <p class="text-slate-400 font-sans">Để tránh việc xung đột dữ liệu khi nhiều người sửa bài, nhóm sử dụng Google Docs để viết bài trực tuyến thời gian thực. Mình trực tiếp phụ trách soạn thảo Phần 1 (Khái niệm & nguyên lý hoạt động AI ngoại ngữ), Phần 2 (Lợi ích cá nhân hóa lộ trình, luyện phát âm, dịch thuật) và Phần 3 (Thách thức nguy cơ phụ thuộc, giảm tự duy độc lập). Góp ý chéo thông qua tính năng Comment và rà soát kỹ lưu trữ lịch sử phiên bản.</p>
+                                        <p class="text-slate-400 font-sans">Để tránh việc xung đột dữ liệu khi nhiều người sửa bài, nhóm sử dụng Google Docs để viết bài trực tuyến thời gian thực. Mình trực tiếp phụ trách soạn thảo Phần 1 (Khái niệm & nguyên lý hoạt động AI ngoại ngữ), Phần 2 (Lợi ích cá nhân hóa lộ trình, luyện phát âm, dịch thuật) và Phần 3 (Thách thức nguy cơ phụ thuộc, giảm tự duy độc lập). Góp ý chéo thông qua tính năng Comment và rà soát kỹ lưỡng Lịch sử phiên bản.</p>
                                     </div>
                                     <div>
                                         <p class="font-semibold text-emerald-300">3. Google Drive trong quản trị và bảo mật tài nguyên nhóm</p>
@@ -909,7 +913,82 @@
                 </div>
             </div>
 
-            <!-- APPLICATION 4: INTERACTIVE RECYCLE BIN -->
+            <!-- APPLICATION 4: GALLERY WINDOW -->
+            <div id="win-gallery" class="app-window w-[850px] h-[610px] glass-panel-dark rounded-2xl flex flex-col overflow-hidden text-white border border-white/10" style="left: 320px; top: 120px;">
+                <div class="window-header flex items-center justify-between px-5 py-3 bg-black/50 border-b border-white/10 select-none">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="image" class="w-4 h-4 text-sky-300"></i>
+                        <span class="text-xs font-medium tracking-widest text-indigo-200 uppercase">Thư Viện Ảnh & Kỷ Niệm</span>
+                    </div>
+                    <div class="flex items-center gap-2 window-control-btn">
+                        <button onclick="closeWindow('win-gallery')" class="w-3.5 h-3.5 rounded-full bg-rose-500/80 hover:bg-rose-500 transition-colors focus:outline-none flex items-center justify-center">
+                            <i data-lucide="x" class="w-2.5 h-2.5 text-white"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex-grow overflow-y-auto p-6">
+                    <div class="border-b border-white/5 pb-4 mb-6">
+                        <span class="text-[10px] tracking-widest text-sky-400 uppercase font-semibold">Hình ảnh thực tế</span>
+                        <h3 class="text-xl font-bold serif-font text-slate-100">Khoảnh Khắc Kỷ Niệm & Học Tập</h3>
+                    </div>
+
+                    <!-- Lưới ảnh (Grid) hiển thị 5 ảnh cục bộ -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Ảnh 1 -->
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 1.jpg', 'Hình 1: Chân dung cá nhân - Phạm Ngọc Ngân Châm')">
+                            <img src="Hình 1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 1">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="text-xs text-white tracking-wider font-light flex items-center gap-1">
+                                    <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Ảnh 2 -->
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 2.jpg', 'Hình 2: Minh chứng thực hành bài tập và tự học nghiên cứu')">
+                            <img src="Hình 2.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 2">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="text-xs text-white tracking-wider font-light flex items-center gap-1">
+                                    <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Ảnh 3 -->
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 3.jpg', 'Hình 3: Hoạt động học tập, trao đổi ý kiến nhóm trực tuyến')">
+                            <img src="Hình 3.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 3">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="text-xs text-white tracking-wider font-light flex items-center gap-1">
+                                    <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Ảnh 4 -->
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 4.jpg', 'Hình 4: Kỷ niệm lớp học phần Ngôn ngữ & Văn hóa Trung Quốc 25C3')">
+                            <img src="Hình 4.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 4">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="text-xs text-white tracking-wider font-light flex items-center gap-1">
+                                    <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Ảnh 5 -->
+                        <div class="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20 cursor-pointer" onclick="openLightbox('Hình 5.jpg', 'Hình 5: Minh chứng sản phẩm sáng tạo nội dung số đồng hành cùng AI')">
+                            <img src="Hình 5.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Hình 5">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="text-xs text-white tracking-wider font-light flex items-center gap-1">
+                                    <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APPLICATION 5: INTERACTIVE RECYCLE BIN -->
             <div id="win-recycle-bin" class="app-window w-full max-w-2xl h-[56vh] glass-panel-dark rounded-2xl flex flex-col overflow-hidden text-white border border-white/10" style="left: 280px; top: 220px;">
                 <div class="window-header flex items-center justify-between px-5 py-3 bg-black/50 border-b border-white/10 select-none">
                     <div class="flex items-center gap-2">
@@ -976,7 +1055,16 @@
 
         </div>
 
-        <!-- ==================== WINDOWS SYSTEM START MENU (Scaled 50%) ==================== -->
+        <!-- LIGHTBOX DI ĐỘNG -->
+        <div id="lightbox" class="fixed inset-0 bg-black/90 z-[99999] hidden flex-col items-center justify-center p-4" onclick="closeLightbox()">
+            <button class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors animate-pulse" onclick="closeLightbox()">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <img id="lightbox-img" src="" class="max-w-full max-h-[80vh] rounded-lg object-contain shadow-2xl transition-all duration-300" onclick="event.stopPropagation()">
+            <p id="lightbox-caption" class="text-white/80 text-sm mt-4 tracking-wide font-light"></p>
+        </div>
+
+        <!-- ==================== WINDOWS SYSTEM START MENU ==================== -->
         <div id="start-menu" class="absolute bottom-20 left-1/2 -translate-x-1/2 w-[480px] glass-panel-dark rounded-2xl shadow-2xl p-6 flex flex-col text-white border border-white/15 opacity-0 pointer-events-none scale-95 transition-all duration-300 z-[999]">
             <div class="flex items-center gap-4 border-b border-white/10 pb-5 mb-5">
                 <div class="relative w-[72px] h-[72px] rounded-full p-0.5 bg-white/20 overflow-hidden">
@@ -1002,6 +1090,10 @@
                     <i data-lucide="award" class="w-6 h-6 text-rose-400"></i>
                     <span>Tổng Kết Cuối Kỳ</span>
                 </button>
+                <button onclick="openWindow('win-gallery'); toggleStartMenu();" class="w-full text-left p-2.5 hover:bg-white/5 rounded-lg text-[15px] font-medium flex items-center gap-4 transition-colors text-sky-200">
+                    <i data-lucide="image" class="w-6 h-6 text-sky-400"></i>
+                    <span>Thư Viện Ảnh</span>
+                </button>
                 <a href="https://drive.google.com/drive/folders/1UfrVXuK82cC4SywK87lNnzwEk-4ntSh_?usp=drive_link" target="_blank" class="w-full text-left p-2.5 hover:bg-white/5 rounded-lg text-[15px] font-medium flex items-center gap-4 transition-colors text-emerald-200">
                     <i data-lucide="external-link" class="w-6 h-6 text-emerald-400"></i>
                     <span>Tài liệu trên GG Drive</span>
@@ -1017,7 +1109,7 @@
             </div>
         </div>
 
-        <!-- ==================== SYSTEM TASKBAR (Win 11 Style - Scaled 50%) ==================== -->
+        <!-- ==================== SYSTEM TASKBAR ==================== -->
         <footer class="w-full max-w-[1152px] mx-auto h-[72px] glass-taskbar rounded-[24px] flex items-center justify-between px-[36px] shadow-2xl z-50">
             <div class="flex items-center gap-3 text-white/75">
                 <i data-lucide="cloud-sun" class="w-[30px] h-[30px] text-amber-300"></i>
@@ -1037,6 +1129,9 @@
                 </button>
                 <button onclick="openWindow('win-summary')" id="task-win-summary" class="relative w-[54px] h-[54px] flex items-center justify-center rounded-lg hover:bg-white/10 text-rose-300 hover:text-rose-100 transition-all focus:outline-none">
                     <i data-lucide="award" class="w-[30px] h-[30px]"></i>
+                </button>
+                <button onclick="openWindow('win-gallery')" id="task-win-gallery" class="relative w-[54px] h-[54px] flex items-center justify-center rounded-lg hover:bg-white/10 text-sky-300 hover:text-sky-100 transition-all focus:outline-none">
+                    <i data-lucide="image" class="w-[30px] h-[30px]"></i>
                 </button>
                 <button onclick="openWindow('win-recycle-bin')" id="task-win-recycle-bin" class="relative w-[54px] h-[54px] flex items-center justify-center rounded-lg hover:bg-white/10 text-emerald-300 hover:text-emerald-100 transition-all focus:outline-none">
                     <i data-lucide="trash-2" class="w-[30px] h-[30px]"></i>
@@ -1089,7 +1184,6 @@
         async function fetchLiveWeather() {
             const weatherEl = document.getElementById('weather-info');
             try {
-                // Tọa độ Hà Nội: Vĩ độ 21.0285, Kinh độ 105.8542
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=21.0285&longitude=105.8542&current_weather=true');
                 if (res.ok) {
                     const data = await res.json();
@@ -1101,7 +1195,6 @@
                     if (weatherEl) weatherEl.innerText = `30°C • Hà Nội`;
                 }
             } catch (err) {
-                // Trả về nhiệt độ mặc định nếu lỗi mạng hoặc CORS chặn
                 if (weatherEl) weatherEl.innerText = `30°C • Hà Nội`;
             }
         }
@@ -1118,7 +1211,6 @@
             unlock();
         });
 
-        // Hỗ trợ gõ phím bất kỳ ngoài ô nhập liệu để bỏ qua màn hình khóa
         window.addEventListener('keydown', function(event) {
             const lockScreen = document.getElementById('lock-screen');
             if (lockScreen && !lockScreen.classList.contains('unlocked')) {
@@ -1134,8 +1226,10 @@
             closeWindow('win-bio');
             closeWindow('win-projects');
             closeWindow('win-summary');
+            closeWindow('win-gallery');
             closeWindow('win-recycle-bin');
             closeWindow('win-text-viewer');
+            closeLightbox();
         }
 
         // 4. Start Menu Handling
@@ -1157,6 +1251,7 @@
             'win-bio': { left: '220px', top: '100px' },
             'win-projects': { left: '310px', top: '70px' },
             'win-summary': { left: '460px', top: '220px' },
+            'win-gallery': { left: '320px', top: '120px' },
             'win-recycle-bin': { left: '280px', top: '280px' },
             'win-text-viewer': { left: '360px', top: '260px' }
         };
@@ -1259,7 +1354,6 @@
         
         document.querySelectorAll('.app-window').forEach(makeDraggable);
 
-        // Bring clicked window to front
         document.querySelectorAll('.app-window').forEach(win => {
             win.addEventListener('mousedown', () => {
                 highestZIndex++;
@@ -1461,6 +1555,28 @@
                         document.getElementById('recycle-dot').classList.add('hidden');
                     }
                 }, 300);
+            }
+        }
+
+        // 14. Lightbox Handlers
+        function openLightbox(src, caption) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const cap = document.getElementById('lightbox-caption');
+            
+            if (lightbox && img && cap) {
+                img.src = src;
+                cap.innerText = caption;
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+            }
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
             }
         }
 
